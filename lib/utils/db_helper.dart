@@ -4,8 +4,8 @@ import 'package:path/path.dart';
 import 'package:todolist/models/todo.dart';
 
 class DBHelper {
-  DBHelper._privateConsstructor();
-  static final DBHelper instance = DBHelper._privateConsstructor();
+  DBHelper._privateConstructor();
+  static final DBHelper instance = DBHelper._privateConstructor();
 
   static const _fileName = 'todolist.db';
   static const _tableName = 'todolist';
