@@ -1,3 +1,4 @@
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'package:todolist/models/todo.dart';
@@ -13,6 +14,26 @@ class DBHelper {
   static const todoColorIndex = 'color';
   static const todoCompleted = 'completed';
   static Database? _database;
+  static SharedPreferences? sharedPreferences;
+
+  Future<void> saveToPrefs(String key, dynamic value) async {
+    if (value is bool) {
+      await sharedPreferences!.setBool(key, value);
+    } else {
+      await sharedPreferences!.setStringList(key, value);
+    }
+  }
+
+  getFromPrefs(String key) {
+    var result = sharedPreferences!.get(key);
+    if (result != null) {
+      if (result is List<Object?>) {
+        return List<String>.from(result);
+      }
+      return result as bool;
+    }
+    return null;
+  }
 
   Future<Database> get database async {
     if (_database != null) {

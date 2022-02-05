@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todolist/providers/theme_provider.dart';
 import 'package:todolist/providers/todo_provider.dart';
 import 'package:todolist/routes/home.dart';
 import 'package:todolist/routes/new_task.dart';
+import 'package:todolist/utils/db_helper.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  DBHelper.sharedPreferences = await SharedPreferences.getInstance();
   runApp(
     MultiProvider(providers: [
       ChangeNotifierProvider(

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todolist/models/todo.dart';
 import 'package:todolist/utils/db_helper.dart';
 
@@ -9,8 +8,6 @@ class TodoProvider with ChangeNotifier {
   TodoProvider() {
     loadTodos();
   }
-
-  SharedPreferences? _prefs;
 
   bool loading = true;
 
@@ -46,12 +43,11 @@ class TodoProvider with ChangeNotifier {
     for (Todo todo in _todoList) {
       customOrder.add(todo.id.toString());
     }
-    await _prefs!.setStringList('list_order', customOrder);
+    await DBHelper.instance.saveToPrefs('list_order', customOrder);
   }
 
   Future<void> loadTodos() async {
-    _prefs ??= await SharedPreferences.getInstance();
-    List<String>? customOrder = _prefs!.getStringList('list_order');
+    List<String>? customOrder = DBHelper.instance.getFromPrefs('list_order');
     _todoList = await dbHelper.loadTodos(customOrder: customOrder);
     if (customOrder == null) saveOrder();
     loading = false;
