@@ -106,6 +106,9 @@ class NewTask extends StatelessWidget {
                 SizedBox(
                   height: 30,
                   child: ListView.builder(
+                    physics: const BouncingScrollPhysics(
+                      parent: AlwaysScrollableScrollPhysics(),
+                    ),
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (context, index) => GestureDetector(
                       onTap: () {
